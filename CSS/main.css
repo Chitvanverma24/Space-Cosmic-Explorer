@@ -1,0 +1,1247 @@
+/* ============================================================================
+   SPACE COSMIC EXPLORER — main.css
+   Premium Futuristic NASA-Inspired Dashboard Theme
+   Palette   : Purple (primary) • Light Cyan (accent) • Deep Black (background)
+   Style     : Glassmorphism / Commercial-grade UI
+   Built for : Streamlit multipage app (Home, Visualization, Exoplanet Explorer,
+               Host Star Observatory, Asteroid Center, Recommendation Engine,
+               Comparison Lab, About) + Utils/components.py + Utils/theme.py
+============================================================================ */
+
+
+/* ============================================================================
+   1. ROOT VARIABLES
+============================================================================ */
+
+:root {
+
+    /* Core Palette */
+    --sce-black:            #05050a;
+    --sce-black-soft:       #0a0a14;
+    --sce-space-900:        #0d0b1a;
+    --sce-space-800:        #12101f;
+    --sce-space-700:        #191527;
+
+    /* Purple System */
+    --sce-purple:           #7F5AF0;
+    --sce-purple-light:     #BB86FC;
+    --sce-purple-dark:      #4C2E9E;
+    --sce-purple-glow:      rgba(127, 90, 240, 0.55);
+    --sce-purple-glow-strong: rgba(155, 92, 255, 0.85);
+
+    /* Cyan Accent */
+    --sce-cyan:             #49D6FF;
+    --sce-cyan-light:       #9FF3FF;
+    --sce-cyan-glow:        rgba(73, 214, 255, 0.35);
+
+    /* Text */
+    --sce-text-primary:     #F2EFFB;
+    --sce-text-secondary:   #C9C3E0;
+    --sce-text-muted:       #9088AE;
+
+    /* Glass Surfaces */
+    --sce-glass-bg:         rgba(255, 255, 255, 0.045);
+    --sce-glass-bg-strong:  rgba(255, 255, 255, 0.07);
+    --sce-glass-border:     rgba(191, 148, 255, 0.28);
+    --sce-glass-border-strong: rgba(191, 148, 255, 0.55);
+
+    /* Radii & Motion */
+    --sce-radius-sm:        10px;
+    --sce-radius-md:        16px;
+    --sce-radius-lg:        22px;
+    --sce-radius-xl:        28px;
+    --sce-transition:       all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    --sce-transition-fast:  all 0.2s ease;
+}
+
+
+/* ============================================================================
+   2. GLOBAL RESET & BACKGROUND (Purple Nebula on Deep Black)
+============================================================================ */
+
+html, body, [data-testid="stAppViewContainer"] {
+    color: var(--sce-text-primary) !important;
+    font-family: "Segoe UI", "Inter", -apple-system, sans-serif;
+}
+
+[data-testid="stAppViewContainer"] {
+    background:
+        radial-gradient(circle at 12% 8%,  rgba(127, 90, 240, 0.22) 0%, transparent 42%),
+        radial-gradient(circle at 88% 15%, rgba(73, 214, 255, 0.12) 0%, transparent 38%),
+        radial-gradient(circle at 50% 100%, rgba(127, 90, 240, 0.16) 0%, transparent 55%),
+        radial-gradient(circle at 80% 80%, rgba(155, 92, 255, 0.10) 0%, transparent 45%),
+        linear-gradient(180deg, var(--sce-black) 0%, var(--sce-black-soft) 45%, var(--sce-space-900) 100%);
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+[data-testid="stHeader"] {
+    background: transparent !important;
+    backdrop-filter: blur(6px);
+}
+
+[data-testid="stAppViewContainer"] > .main {
+    padding-top: 0.5rem;
+}
+
+/* Faint animated star-dust layer behind content */
+[data-testid="stAppViewContainer"]::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.35) 0%, transparent 100%),
+        radial-gradient(1px 1px at 70% 60%, rgba(255,255,255,0.25) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 40% 80%, rgba(191,148,255,0.35) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 20%, rgba(73,214,255,0.30) 0%, transparent 100%),
+        radial-gradient(1px 1px at 55% 10%, rgba(255,255,255,0.20) 0%, transparent 100%);
+    background-repeat: repeat;
+    background-size: 600px 600px;
+    opacity: 0.6;
+    z-index: 0;
+}
+
+::selection {
+    background: var(--sce-purple);
+    color: #fff;
+}
+
+
+/* ============================================================================
+   3. PREMIUM SCROLLBAR
+============================================================================ */
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--sce-space-900);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--sce-purple), var(--sce-purple-dark));
+    border-radius: 10px;
+    border: 2px solid var(--sce-space-900);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--sce-purple-light), var(--sce-purple));
+}
+
+
+/* ============================================================================
+   4. SIDEBAR — Glass / Fixed / Purple Active Tab
+============================================================================ */
+
+[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, rgba(13, 11, 26, 0.92) 0%, rgba(10, 9, 20, 0.96) 100%) !important;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-right: 1px solid var(--sce-glass-border);
+    box-shadow: 6px 0 30px rgba(0, 0, 0, 0.45);
+}
+
+[data-testid="stSidebar"] > div:first-child {
+    background: transparent !important;
+}
+
+/* Remove default grey Streamlit surfaces inside sidebar (forceful) */
+[data-testid="stSidebar"] * {
+    background-color: transparent !important;
+    background-image: none !important;
+}
+
+/* The rounded grey box wrapping the nav links specifically */
+[data-testid="stSidebarNav"],
+[data-testid="stSidebarNav"] > div,
+[data-testid="stSidebarNav"] ul,
+[data-testid="stSidebarUserContent"],
+[data-testid="stSidebar"] [data-testid="stVerticalBlock"],
+[data-testid="stSidebar"] [data-testid="stVerticalBlockBorderWrapper"] {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Sidebar logo / top area — small, no black card look, pinned to top */
+[data-testid="stSidebar"] [data-testid="stImage"] {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 10px 0 8px 0;
+    margin-bottom: 6px;
+    border-bottom: 1px solid var(--sce-glass-border);
+    background: var(--sce-space-900) !important;
+}
+
+/* Streamlit wraps the <img> in an extra inner div — force that to
+   center its contents too, otherwise the outer flex has no effect */
+[data-testid="stSidebar"] [data-testid="stImage"] > div,
+[data-testid="stSidebar"] [data-testid="stImageContainer"] {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+}
+
+/* Override the generic st.image styling for this specific logo:
+   no shadow/glow, no rounding, small fixed width, blend away its
+   black background so it visually merges into the dark sidebar */
+[data-testid="stSidebar"] [data-testid="stImage"] img {
+    max-width: 110px !important;
+    width: 110px !important;
+    display: block !important;
+    margin: 0 auto !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    mix-blend-mode: lighten;
+}
+
+/* Sidebar navigation links (multipage nav) */
+[data-testid="stSidebarNav"] {
+    padding-top: 10px;
+}
+
+[data-testid="stSidebarNav"] ul li a,
+[data-testid="stSidebarNav"] a span {
+    color: var(--sce-text-secondary) !important;
+    font-weight: 500;
+    border-radius: var(--sce-radius-sm);
+    transition: var(--sce-transition-fast);
+}
+
+[data-testid="stSidebarNav"] ul li a {
+    margin: 3px 10px;
+    padding: 10px 14px !important;
+}
+
+[data-testid="stSidebarNav"] ul li a:hover {
+    background: rgba(127, 90, 240, 0.16) !important;
+    color: var(--sce-text-primary) !important;
+    box-shadow: inset 0 0 0 1px var(--sce-glass-border-strong);
+}
+
+/* Active / selected page tab */
+[data-testid="stSidebarNav"] ul li a[aria-selected="true"],
+[data-testid="stSidebarNav"] ul li a.active {
+    background: linear-gradient(90deg, rgba(127, 90, 240, 0.35), rgba(127, 90, 240, 0.08)) !important;
+    color: #fff !important;
+    box-shadow: inset 3px 0 0 var(--sce-purple-light), 0 0 18px rgba(127, 90, 240, 0.35);
+    font-weight: 700;
+}
+
+/* Sidebar headings / captions / dividers */
+[data-testid="stSidebar"] h1,
+[data-testid="stSidebar"] h2,
+[data-testid="stSidebar"] h3 {
+    color: var(--sce-purple-light) !important;
+}
+
+[data-testid="stSidebar"] hr {
+    border-color: var(--sce-glass-border) !important;
+    opacity: 0.6;
+}
+
+/* Kill Streamlit's own grey theme variables wherever they leak inside the
+   sidebar (these otherwise tint nav items, toggles and widget chrome grey) */
+[data-testid="stSidebar"],
+[data-testid="stSidebarContent"],
+[data-testid="stSidebarUserContent"],
+[data-testid="stSidebarHeader"] {
+    --background-color: transparent !important;
+    --secondary-background-color: rgba(127, 90, 240, 0.10) !important;
+    background-color: transparent !important;
+}
+
+/* The little "collapse sidebar" arrow / expand control */
+[data-testid="stSidebarCollapsedControl"],
+[data-testid="collapsedControl"] {
+    background: rgba(127, 90, 240, 0.16) !important;
+    border: 1px solid var(--sce-glass-border);
+    border-radius: 50%;
+}
+
+[data-testid="stSidebarCollapsedControl"] svg,
+[data-testid="collapsedControl"] svg,
+[data-testid="stSidebarNavCollapseButton"] svg,
+[data-testid="baseButton-headerNoPadding"] svg {
+    color: var(--sce-purple-light) !important;
+    fill: var(--sce-purple-light) !important;
+}
+
+/* Top rainbow decoration strip Streamlit renders above the header — removed */
+[data-testid="stDecoration"] {
+    display: none !important;
+}
+
+/* Sidebar resize handle */
+[data-testid="stSidebarResizeHandle"] {
+    background: var(--sce-glass-border) !important;
+}
+
+
+/* ============================================================================
+   5. IMAGES
+   (Hero background images + overlay removed — every page now opens with the
+   premium page header from section 6 instead.)
+============================================================================ */
+
+.main .block-container {
+    padding-top: 1.5rem !important;
+}
+
+/* st.image keeps the normal inline look */
+[data-testid="stImage"] img {
+    border-radius: var(--sce-radius-md);
+    box-shadow:
+        0 12px 32px rgba(0, 0, 0, 0.45),
+        0 0 0 1px var(--sce-glass-border);
+    width: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+/* ============================================================================
+   6. PAGE HEADER / SECTION HEADER / TYPOGRAPHY (components.py + theme.py)
+============================================================================ */
+
+h1 {
+    color: var(--sce-text-primary) !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.5px;
+    text-shadow: 0 0 30px rgba(127, 90, 240, 0.35);
+}
+
+h1 span {
+    color: var(--sce-purple-light) !important;
+}
+
+h2, h3, h4 {
+    color: var(--sce-text-primary) !important;
+}
+
+[data-testid="stMarkdownContainer"] h3,
+.stSubheader,
+[data-testid="stHeader"] + div h3 {
+    color: var(--sce-purple-light) !important;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1.6rem 0 1rem 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--sce-glass-border);
+}
+
+.section-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--sce-text-primary);
+}
+
+.section-description {
+    color: var(--sce-text-muted);
+    font-size: 0.9rem;
+    margin-top: 2px;
+}
+
+.sub-section {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--sce-cyan-light);
+    margin: 10px 0;
+}
+
+/* Single definitive divider rule (the old duplicate hr rule further down
+   could never win against this one because of !important — merged here). */
+.space-divider,
+hr {
+    border: none !important;
+    height: 1px !important;
+    margin: 1.6rem 0 1.9rem 0 !important;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(124, 77, 255, 0.55),
+        rgba(69, 214, 255, 0.25),
+        transparent
+    ) !important;
+}
+
+.space-badge {
+    display: inline-block;
+    background: rgba(127, 90, 240, 0.18);
+    border: 1px solid var(--sce-glass-border-strong);
+    color: var(--sce-purple-light);
+    padding: 4px 14px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+}
+
+/*==================================================
+            PREMIUM PAGE HEADER
+==================================================*/
+
+/* Glassmorphism hero shell — same card language as .metric-card / .glass-card.
+   Two-column layout: text content on the left, cinematic artwork on the right. */
+.page-header {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    padding: 34px 38px 30px 38px;
+    margin-bottom: 20px;
+    background: linear-gradient(160deg, var(--sce-glass-bg-strong) 0%, var(--sce-glass-bg) 100%);
+    border: 1px solid var(--sce-glass-border);
+    border-radius: var(--sce-radius-xl);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow:
+        0 8px 28px rgba(0, 0, 0, 0.35),
+        0 0 42px rgba(127, 90, 240, 0.12);
+    animation: fadeUp .7s ease;
+}
+
+/* Subtle space atmosphere: soft purple/cyan ambient glow + a sparse field of
+   tiny stars, kept at very low opacity so content stays perfectly readable.
+   The whole layer breathes slowly (heroAmbient). */
+.page-header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background:
+        radial-gradient(1.5px 1.5px at 12% 24%, rgba(255, 255, 255, 0.50), transparent 100%),
+        radial-gradient(1px 1px at 28% 68%, rgba(255, 255, 255, 0.35), transparent 100%),
+        radial-gradient(1.5px 1.5px at 41% 18%, rgba(159, 243, 255, 0.45), transparent 100%),
+        radial-gradient(1px 1px at 54% 82%, rgba(255, 255, 255, 0.30), transparent 100%),
+        radial-gradient(2px 2px at 66% 30%, rgba(187, 134, 252, 0.40), transparent 100%),
+        radial-gradient(1px 1px at 78% 60%, rgba(255, 255, 255, 0.35), transparent 100%),
+        radial-gradient(1.5px 1.5px at 88% 14%, rgba(159, 243, 255, 0.40), transparent 100%),
+        radial-gradient(1px 1px at 94% 76%, rgba(255, 255, 255, 0.30), transparent 100%),
+        radial-gradient(1px 1px at 6% 86%, rgba(187, 134, 252, 0.35), transparent 100%),
+        radial-gradient(ellipse at top left, rgba(127, 90, 240, 0.18), transparent 55%),
+        radial-gradient(ellipse at bottom right, rgba(73, 214, 255, 0.10), transparent 60%);
+    pointer-events: none;
+    animation: heroAmbient 9s ease-in-out infinite alternate;
+}
+
+.page-header > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Left column: badge / title / subtitle / highlight chips */
+.page-header-content {
+    flex: 1 1 58%;
+    min-width: 0;
+}
+
+/* Right column: cinematic SVG artwork (~40% of the hero) */
+.page-header-art {
+    flex: 0 0 40%;
+    max-width: 430px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: -26px -10px -30px 0;   /* let the glow bleed toward the edges */
+}
+
+.page-header-art img {
+    width: 100%;
+    height: auto;
+    animation: heroFloat 7s ease-in-out infinite;
+    filter:
+        drop-shadow(0 0 26px rgba(127, 90, 240, 0.35))
+        drop-shadow(0 14px 44px rgba(73, 214, 255, 0.12));
+    transition: var(--sce-transition);
+}
+
+.page-header:hover .page-header-art img {
+    filter:
+        drop-shadow(0 0 34px rgba(127, 90, 240, 0.5))
+        drop-shadow(0 14px 48px rgba(73, 214, 255, 0.18));
+}
+
+/* Optional highlight chips under the subtitle */
+.page-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.page-chip {
+    display: inline-flex;
+    align-items: center;
+    background: var(--sce-glass-bg);
+    border: 1px solid var(--sce-glass-border);
+    backdrop-filter: blur(10px);
+    color: var(--sce-cyan-light);
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+@keyframes heroFloat {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-12px); }
+}
+
+@keyframes heroAmbient {
+    from { opacity: 0.7; }
+    to   { opacity: 1; }
+}
+
+.page-badge{
+
+    display:inline-block;
+
+    padding:8px 18px;
+
+    border-radius:40px;
+
+    border:1px solid rgba(124,77,255,.45);
+
+    background:rgba(124,77,255,.10);
+
+    color:#9ED8FF;
+
+    font-size:.78rem;
+
+    font-weight:700;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+    margin-bottom:18px;
+
+}
+
+
+
+/* !important needed on size/spacing: Streamlit's own emotion-generated
+   h1 rules (font-size, padding) otherwise win on specificity. */
+.page-title {
+    font-size: 3.25rem !important;
+    font-weight: 800 !important;
+    line-height: 1.1 !important;
+    color: var(--sce-text-primary) !important;
+    margin: 0 0 14px 0 !important;
+    padding: 0 !important;
+    letter-spacing: -1px;
+    text-shadow: 0 0 18px rgba(124, 77, 255, 0.35);
+}
+
+.page-title span {
+    color: var(--sce-purple-light) !important;
+}
+
+
+.page-subtitle {
+    max-width: 760px;
+    font-size: 1.08rem;
+    color: var(--sce-text-secondary);
+    line-height: 1.9;
+    margin-bottom: 0;
+}
+
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+
+
+
+/* ============================================================================
+   7. CHIPS (info-chip / stat-chip)
+============================================================================ */
+
+.info-chip,
+.stat-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--sce-glass-bg);
+    border: 1px solid var(--sce-glass-border);
+    backdrop-filter: blur(10px);
+    padding: 8px 16px;
+    border-radius: 999px;
+    margin: 4px 6px 4px 0;
+    transition: var(--sce-transition-fast);
+}
+
+.info-chip:hover,
+.stat-chip:hover {
+    border-color: var(--sce-glass-border-strong);
+    box-shadow: 0 0 22px var(--sce-purple-glow);
+    transform: translateY(-2px);
+}
+
+.chip-icon, .stat-icon {
+    font-size: 1rem;
+    color: var(--sce-cyan);
+}
+
+.chip-text, .stat-text {
+    color: var(--sce-text-secondary);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+
+/* ============================================================================
+   8. UNIVERSAL CARD LANGUAGE
+   (metric-card / dashboard-card / glass-card / feature-card / info-card /
+    quick-card / discovery-card + st.container(border=True) + st.metric)
+============================================================================ */
+
+.metric-card,
+.dashboard-card,
+.glass-card,
+.feature-card,
+.info-card,
+.quick-card,
+.discovery-card,
+[data-testid="stVerticalBlockBorderWrapper"],
+div[data-testid="stContainer"][style*="border"],
+[data-testid="stMetric"] {
+    position: relative;
+    background: linear-gradient(160deg, var(--sce-glass-bg-strong) 0%, var(--sce-glass-bg) 100%);
+    border: 1px solid var(--sce-glass-border);
+    border-radius: var(--sce-radius-lg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 22px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+    transition: var(--sce-transition);
+}
+
+.metric-card:hover,
+.dashboard-card:hover,
+.glass-card:hover,
+.feature-card:hover,
+.info-card:hover,
+.quick-card:hover,
+.discovery-card:hover,
+[data-testid="stVerticalBlockBorderWrapper"]:hover,
+[data-testid="stMetric"]:hover {
+    transform: translateY(-8px) scale(1.015);
+    border-color: var(--sce-glass-border-strong);
+    box-shadow:
+        0 20px 45px rgba(0, 0, 0, 0.5),
+        0 0 65px var(--sce-purple-glow-strong),
+        0 0 0 1px var(--sce-purple-glow);
+}
+
+/* Subtle top purple sheen on every card */
+.metric-card::before,
+.dashboard-card::before,
+.glass-card::before,
+.feature-card::before,
+.info-card::before,
+.quick-card::before,
+.discovery-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(127, 90, 240, 0.10), transparent 55%);
+    pointer-events: none;
+}
+
+/* ---- Metric Card internals ---- */
+.metric-icon {
+    font-size: 1.8rem;
+    margin-bottom: 6px;
+}
+
+.metric-title {
+    color: var(--sce-text-muted);
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+.metric-value {
+    color: var(--sce-text-primary);
+    font-size: 1.7rem;
+    font-weight: 800;
+    margin: 4px 0;
+}
+
+.metric-subtitle {
+    color: var(--sce-cyan-light);
+    font-size: 0.8rem;
+}
+
+/* ---- Dashboard Card internals ---- */
+.dashboard-icon {
+    font-size: 2.2rem;
+    margin-bottom: 8px;
+}
+
+.dashboard-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--sce-text-primary);
+    margin-bottom: 6px;
+}
+
+.dashboard-description {
+    color: var(--sce-text-muted);
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+.dashboard-button {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 8px 18px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--sce-purple), var(--sce-purple-dark));
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+/* ---- Glass / Feature / Info Card internals ---- */
+.glass-title,
+.feature-title,
+.info-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--sce-purple-light);
+    margin-bottom: 8px;
+}
+
+.glass-content,
+.feature-description,
+.info-content {
+    color: var(--sce-text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.feature-icon {
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+/* ---- Quick Insight Card internals ---- */
+.quick-icon {
+    font-size: 1.4rem;
+}
+
+.quick-title {
+    color: var(--sce-text-muted);
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-top: 4px;
+}
+
+.quick-value {
+    color: var(--sce-cyan-light);
+    font-size: 1.3rem;
+    font-weight: 800;
+}
+
+/* ---- Discovery Card internals ---- */
+.discovery-planet {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--sce-purple-light);
+    margin-bottom: 10px;
+}
+
+.discovery-item {
+    color: var(--sce-text-secondary);
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+    line-height: 1.5;
+}
+
+.discovery-item strong {
+    color: var(--sce-text-primary);
+}
+
+
+/* ============================================================================
+   9. NATIVE st.metric() STYLING (KPI ROWS ACROSS ALL PAGES)
+============================================================================ */
+
+[data-testid="stMetric"] {
+    text-align: center;
+}
+
+[data-testid="stMetricLabel"] {
+    color: var(--sce-text-muted) !important;
+    font-weight: 600 !important;
+    font-size: 0.85rem !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+[data-testid="stMetricValue"] {
+    color: var(--sce-text-primary) !important;
+    font-weight: 800 !important;
+    text-shadow: 0 0 18px rgba(127, 90, 240, 0.4);
+}
+
+[data-testid="stMetricDelta"] {
+    color: var(--sce-cyan) !important;
+    font-weight: 600 !important;
+}
+
+
+/* ============================================================================
+   10. ALERT BOXES (st.info / st.success / st.warning / st.error)
+        Used across About, Recommendation, Comparison, Asteroid, Host Star
+============================================================================ */
+
+[data-testid="stAlert"],
+div[class*="stAlert"] {
+    border-radius: var(--sce-radius-md) !important;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--sce-glass-border) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    transition: var(--sce-transition);
+}
+
+[data-testid="stAlert"]:hover {
+    border-color: var(--sce-glass-border-strong) !important;
+    box-shadow: 0 14px 38px var(--sce-purple-glow);
+    transform: translateY(-3px);
+}
+
+/* Success */
+[data-testid="stAlertContentSuccess"],
+div[data-baseweb="notification"][class*="success"] {
+    background: linear-gradient(160deg, rgba(127, 90, 240, 0.16), rgba(73, 214, 255, 0.06)) !important;
+}
+
+/* Info */
+[data-testid="stAlertContentInfo"] {
+    background: linear-gradient(160deg, rgba(73, 214, 255, 0.14), rgba(127, 90, 240, 0.05)) !important;
+}
+
+/* Warning */
+[data-testid="stAlertContentWarning"] {
+    background: linear-gradient(160deg, rgba(240, 180, 90, 0.14), rgba(127, 90, 240, 0.05)) !important;
+}
+
+/* Error */
+[data-testid="stAlertContentError"] {
+    background: linear-gradient(160deg, rgba(240, 90, 120, 0.16), rgba(127, 90, 240, 0.05)) !important;
+}
+
+[data-testid="stAlert"] p,
+[data-testid="stAlert"] li,
+[data-testid="stAlert"] h1,
+[data-testid="stAlert"] h2,
+[data-testid="stAlert"] h3 {
+    color: var(--sce-text-primary) !important;
+}
+
+
+/* ============================================================================
+   11. BUTTONS (st.button — Universe Mode, Open Dashboard, Reset Preferences)
+============================================================================ */
+
+[data-testid="stButton"] button,
+[data-testid="baseButton-secondary"],
+[data-testid="baseButton-primary"] {
+    background: linear-gradient(90deg, var(--sce-purple-dark), var(--sce-purple)) !important;
+    color: #fff !important;
+    border: 1px solid var(--sce-glass-border-strong) !important;
+    border-radius: var(--sce-radius-sm) !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.3px;
+    padding: 0.55rem 1.2rem !important;
+    box-shadow: 0 6px 18px rgba(127, 90, 240, 0.3);
+    transition: var(--sce-transition);
+}
+
+[data-testid="stButton"] button:hover {
+    background: linear-gradient(90deg, var(--sce-purple), var(--sce-purple-light)) !important;
+    box-shadow: 0 10px 32px var(--sce-purple-glow-strong);
+    transform: translateY(-3px) scale(1.02);
+    color: #fff !important;
+    border-color: var(--sce-purple-light) !important;
+}
+
+[data-testid="stButton"] button:disabled {
+    background: rgba(127, 90, 240, 0.18) !important;
+    color: var(--sce-text-muted) !important;
+    box-shadow: none;
+    border-color: var(--sce-glass-border) !important;
+    cursor: not-allowed;
+}
+
+[data-testid="stButton"] button:active {
+    transform: translateY(-1px) scale(0.99);
+}
+
+
+/* ============================================================================
+   12. FORM INPUTS — Text / Select / Multiselect / Radio / Checkbox / Slider /
+        Date / Number (Search bars, Recommendation filters, etc.)
+============================================================================ */
+
+/* Shared label styling */
+[data-testid="stWidgetLabel"] p,
+label {
+    color: var(--sce-text-secondary) !important;
+    font-weight: 600 !important;
+    font-size: 0.88rem !important;
+}
+
+/* Text Input / Number Input / Date Input containers */
+[data-testid="stTextInput"] div[data-baseweb="input"],
+[data-testid="stNumberInput"] div[data-baseweb="input"],
+[data-testid="stDateInput"] div[data-baseweb="input"] {
+    background: var(--sce-glass-bg) !important;
+    border: 1px solid var(--sce-glass-border) !important;
+    border-radius: var(--sce-radius-sm) !important;
+    backdrop-filter: blur(10px);
+    transition: var(--sce-transition-fast);
+}
+
+[data-testid="stTextInput"] input,
+[data-testid="stNumberInput"] input,
+[data-testid="stDateInput"] input {
+    color: var(--sce-text-primary) !important;
+    background: transparent !important;
+}
+
+[data-testid="stTextInput"] div[data-baseweb="input"]:focus-within,
+[data-testid="stNumberInput"] div[data-baseweb="input"]:focus-within,
+[data-testid="stDateInput"] div[data-baseweb="input"]:focus-within {
+    border-color: var(--sce-purple-light) !important;
+    box-shadow: 0 0 0 1px var(--sce-purple-light), 0 0 20px var(--sce-purple-glow) !important;
+}
+
+/* Selectbox / Multiselect */
+[data-testid="stSelectbox"] div[data-baseweb="select"] > div,
+[data-testid="stMultiSelect"] div[data-baseweb="select"] > div {
+    background: var(--sce-glass-bg) !important;
+    border: 1px solid var(--sce-glass-border) !important;
+    border-radius: var(--sce-radius-sm) !important;
+    color: var(--sce-text-primary) !important;
+    backdrop-filter: blur(10px);
+    transition: var(--sce-transition-fast);
+}
+
+[data-testid="stSelectbox"] div[data-baseweb="select"] > div:hover,
+[data-testid="stMultiSelect"] div[data-baseweb="select"] > div:hover {
+    border-color: var(--sce-purple-light) !important;
+    box-shadow: 0 0 18px var(--sce-purple-glow);
+}
+
+/* Multiselect selected tags */
+[data-baseweb="tag"] {
+    background: linear-gradient(90deg, var(--sce-purple-dark), var(--sce-purple)) !important;
+    border-radius: 999px !important;
+}
+
+/* Dropdown menu popover */
+div[data-baseweb="popover"] ul,
+div[data-baseweb="menu"] {
+    background: rgba(13, 11, 26, 0.96) !important;
+    border: 1px solid var(--sce-glass-border-strong) !important;
+    border-radius: var(--sce-radius-sm) !important;
+    backdrop-filter: blur(18px);
+}
+
+div[data-baseweb="popover"] li:hover,
+div[data-baseweb="menu"] li:hover {
+    background: rgba(127, 90, 240, 0.25) !important;
+    color: #fff !important;
+}
+
+/* Radio & Checkbox */
+[data-testid="stRadio"] label,
+[data-testid="stCheckbox"] label {
+    color: var(--sce-text-secondary) !important;
+}
+
+[data-testid="stCheckbox"] span[data-baseweb="checkbox"] > div:first-child,
+[data-testid="stRadio"] span[data-baseweb="radio"] > div:first-child {
+    background: var(--sce-glass-bg) !important;
+    border-color: var(--sce-purple-light) !important;
+}
+
+[data-testid="stCheckbox"] input:checked + div,
+[data-testid="stRadio"] input:checked + div {
+    background: var(--sce-purple) !important;
+    border-color: var(--sce-purple-light) !important;
+    box-shadow: 0 0 12px var(--sce-purple-glow);
+}
+
+/* Slider (Recommendation temperature slider) */
+[data-testid="stSlider"] div[data-baseweb="slider"] > div:nth-child(2) {
+    background: linear-gradient(90deg, var(--sce-purple-dark), var(--sce-purple), var(--sce-cyan)) !important;
+}
+
+[data-testid="stSlider"] div[role="slider"] {
+    background: #fff !important;
+    border: 3px solid var(--sce-purple-light) !important;
+    box-shadow: 0 0 16px var(--sce-purple-glow-strong) !important;
+}
+
+[data-testid="stTickBar"] {
+    background: transparent !important;
+}
+
+[data-testid="stSlider"] [data-testid="stThumbValue"] {
+    color: var(--sce-cyan-light) !important;
+    font-weight: 700;
+}
+
+
+/* ============================================================================
+   13. PLOTLY CHART CONTAINERS (Visualization Dashboard)
+============================================================================ */
+
+[data-testid="stPlotlyChart"] {
+    background: linear-gradient(160deg, var(--sce-glass-bg-strong), var(--sce-glass-bg));
+    border: 1px solid var(--sce-glass-border);
+    border-radius: var(--sce-radius-lg);
+    padding: 14px;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    transition: var(--sce-transition);
+}
+
+[data-testid="stPlotlyChart"]:hover {
+    border-color: var(--sce-glass-border-strong);
+    box-shadow: 0 18px 45px var(--sce-purple-glow);
+    transform: translateY(-4px);
+}
+
+
+/* ============================================================================
+   14. TABLES / DATAFRAMES (Comparison table, Recommendation results)
+============================================================================ */
+
+[data-testid="stDataFrame"],
+[data-testid="stTable"] {
+    border-radius: var(--sce-radius-md) !important;
+    overflow: hidden;
+    border: 1px solid var(--sce-glass-border) !important;
+    background: var(--sce-glass-bg) !important;
+    backdrop-filter: blur(14px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+    transition: var(--sce-transition-fast);
+}
+
+[data-testid="stDataFrame"]:hover,
+[data-testid="stTable"]:hover {
+    border-color: var(--sce-glass-border-strong) !important;
+    box-shadow: 0 14px 36px var(--sce-purple-glow);
+}
+
+[data-testid="stDataFrame"] div[role="columnheader"] {
+    background: rgba(127, 90, 240, 0.20) !important;
+    color: var(--sce-text-primary) !important;
+    font-weight: 700 !important;
+}
+
+[data-testid="stDataFrame"] div[role="row"]:hover {
+    background: rgba(127, 90, 240, 0.14) !important;
+}
+
+[data-testid="stDataFrame"] * {
+    color: var(--sce-text-secondary);
+}
+
+
+/* ============================================================================
+   15. TABS / EXPANDERS (used sparingly, kept consistent)
+============================================================================ */
+
+[data-testid="stTabs"] button[role="tab"] {
+    color: var(--sce-text-muted) !important;
+    font-weight: 600;
+}
+
+[data-testid="stTabs"] button[aria-selected="true"] {
+    color: var(--sce-purple-light) !important;
+    border-bottom: 2px solid var(--sce-purple-light) !important;
+}
+
+[data-testid="stExpander"] {
+    background: var(--sce-glass-bg) !important;
+    border: 1px solid var(--sce-glass-border) !important;
+    border-radius: var(--sce-radius-md) !important;
+    backdrop-filter: blur(12px);
+}
+
+
+/* ============================================================================
+   16. CAPTIONS (st.caption used throughout for helper text & footers)
+============================================================================ */
+
+[data-testid="stCaptionContainer"],
+.stCaption {
+    color: var(--sce-text-muted) !important;
+    font-size: 0.85rem !important;
+}
+
+
+/* ============================================================================
+   17. FOOTER (Utils/theme.py -> footer())
+============================================================================ */
+
+.footer {
+    text-align: center;
+    margin-top: 2.5rem;
+    padding: 34px 20px 26px 20px;
+    border-top: 1px solid var(--sce-glass-border);
+    background: linear-gradient(180deg, transparent 0%, rgba(127, 90, 240, 0.05) 100%);
+}
+
+.footer-title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--sce-purple-light);
+    text-shadow: 0 0 20px rgba(127, 90, 240, 0.4);
+    margin-bottom: 6px;
+}
+
+.footer-description {
+    color: var(--sce-text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.footer-tech {
+    color: var(--sce-cyan-light);
+    font-size: 0.8rem;
+    margin-bottom: 12px;
+    letter-spacing: 0.3px;
+}
+
+.footer-copy {
+    color: var(--sce-text-muted);
+    font-size: 0.78rem;
+    border-top: 1px solid var(--sce-glass-border);
+    padding-top: 12px;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+
+/* ============================================================================
+   18. COLUMN / CONTAINER SPACING POLISH
+============================================================================ */
+
+[data-testid="column"] {
+    padding: 6px;
+}
+
+[data-testid="stVerticalBlock"] {
+    gap: 0.9rem;
+}
+
+/* Divider spacing already handled in section 6 (hr), kept for stDivider testid */
+[data-testid="stDivider"] {
+    border-color: var(--sce-glass-border) !important;
+    opacity: 0.8;
+}
+
+
+/* ============================================================================
+   19. RESPONSIVE ADJUSTMENTS
+============================================================================ */
+
+/* Tablet: keep the side-by-side hero but scale it down gracefully */
+@media (max-width: 1280px) {
+
+    .page-title {
+        font-size: 2.6rem !important;
+    }
+
+    .page-header-art {
+        flex-basis: 36%;
+    }
+}
+
+@media (max-width: 900px) {
+
+    /* Hero stacks: text first, artwork below — no overlap */
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 24px 22px 22px 22px;
+    }
+
+    .page-header-content {
+        flex: 1 1 auto;
+        width: 100%;
+    }
+
+    .page-header-art {
+        flex: 0 0 auto;
+        width: 100%;
+        max-width: 300px;
+        margin: 4px auto 0 auto;
+    }
+
+    .page-title {
+        font-size: 2.2rem !important;
+    }
+
+    .metric-card,
+    .dashboard-card,
+    .glass-card,
+    .feature-card,
+    .info-card,
+    .quick-card,
+    .discovery-card {
+        padding: 16px;
+    }
+
+    .metric-value {
+        font-size: 1.4rem;
+    }
+}
+
+/* ============================================================================
+   END OF FILE
+============================================================================ */

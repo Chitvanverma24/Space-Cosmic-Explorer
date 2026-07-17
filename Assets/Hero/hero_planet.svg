@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 560" fill="none">
+  <defs>
+    <!-- Planet body: lit from upper-left, deep space shadow lower-right -->
+    <radialGradient id="planetBody" cx="0.34" cy="0.28" r="1.05">
+      <stop offset="0%"  stop-color="#C9B2FF"/>
+      <stop offset="22%" stop-color="#9B7BF7"/>
+      <stop offset="48%" stop-color="#7F5AF0"/>
+      <stop offset="74%" stop-color="#43287E"/>
+      <stop offset="100%" stop-color="#150E2B"/>
+    </radialGradient>
+    <!-- Cyan atmosphere rim -->
+    <radialGradient id="atmo" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="78%" stop-color="#49D6FF" stop-opacity="0"/>
+      <stop offset="93%" stop-color="#49D6FF" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#9FF3FF" stop-opacity="0.55"/>
+    </radialGradient>
+    <!-- Ring sweep -->
+    <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#49D6FF" stop-opacity="0"/>
+      <stop offset="18%"  stop-color="#49D6FF" stop-opacity="0.55"/>
+      <stop offset="50%"  stop-color="#BB86FC" stop-opacity="0.85"/>
+      <stop offset="82%"  stop-color="#7F5AF0" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#7F5AF0" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="ringGradThin" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#9FF3FF" stop-opacity="0"/>
+      <stop offset="50%"  stop-color="#9FF3FF" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#BB86FC" stop-opacity="0"/>
+    </linearGradient>
+    <!-- Nebula glows -->
+    <radialGradient id="nebPurple" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#7F5AF0" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#7F5AF0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="nebPink" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#FF6AC1" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#FF6AC1" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="nebCyan" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#49D6FF" stop-opacity="0.32"/>
+      <stop offset="100%" stop-color="#49D6FF" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Moon -->
+    <radialGradient id="moonBody" cx="0.35" cy="0.3" r="1">
+      <stop offset="0%" stop-color="#D7F8FF"/>
+      <stop offset="45%" stop-color="#8FD9F2"/>
+      <stop offset="100%" stop-color="#1E3A5C"/>
+    </radialGradient>
+    <filter id="soft" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+    <filter id="softer" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="16"/>
+    </filter>
+    <clipPath id="planetClip"><circle cx="320" cy="300" r="150"/></clipPath>
+  </defs>
+
+  <!-- ambient nebula clouds -->
+  <ellipse cx="330" cy="290" rx="290" ry="230" fill="url(#nebPurple)"/>
+  <ellipse cx="150" cy="150" rx="170" ry="130" fill="url(#nebPink)"/>
+  <ellipse cx="520" cy="420" rx="180" ry="140" fill="url(#nebCyan)"/>
+
+  <!-- distant stars (twinkling) -->
+  <g fill="#FFFFFF">
+    <circle cx="60"  cy="80"  r="1.6"><animate attributeName="opacity" values="0.25;1;0.25" dur="3.2s" repeatCount="indefinite"/></circle>
+    <circle cx="140" cy="40"  r="1.1"><animate attributeName="opacity" values="1;0.2;1" dur="4.1s" repeatCount="indefinite"/></circle>
+    <circle cx="240" cy="90"  r="1.3"><animate attributeName="opacity" values="0.4;1;0.4" dur="2.7s" repeatCount="indefinite"/></circle>
+    <circle cx="420" cy="50"  r="1.5"><animate attributeName="opacity" values="0.3;1;0.3" dur="3.8s" repeatCount="indefinite"/></circle>
+    <circle cx="560" cy="90"  r="1.2"><animate attributeName="opacity" values="1;0.3;1" dur="3.1s" repeatCount="indefinite"/></circle>
+    <circle cx="610" cy="240" r="1.4"><animate attributeName="opacity" values="0.35;1;0.35" dur="4.4s" repeatCount="indefinite"/></circle>
+    <circle cx="590" cy="500" r="1.2"><animate attributeName="opacity" values="0.3;1;0.3" dur="2.9s" repeatCount="indefinite"/></circle>
+    <circle cx="470" cy="540" r="1.5"><animate attributeName="opacity" values="1;0.25;1" dur="3.6s" repeatCount="indefinite"/></circle>
+    <circle cx="120" cy="520" r="1.3"><animate attributeName="opacity" values="0.4;1;0.4" dur="4.0s" repeatCount="indefinite"/></circle>
+    <circle cx="40"  cy="380" r="1.1"><animate attributeName="opacity" values="0.3;1;0.3" dur="3.4s" repeatCount="indefinite"/></circle>
+    <circle cx="90"  cy="260" r="1.0" fill="#9FF3FF"><animate attributeName="opacity" values="0.4;1;0.4" dur="2.5s" repeatCount="indefinite"/></circle>
+    <circle cx="520" cy="180" r="1.0" fill="#9FF3FF"><animate attributeName="opacity" values="1;0.3;1" dur="3.9s" repeatCount="indefinite"/></circle>
+    <circle cx="360" cy="30"  r="0.9" fill="#BB86FC"><animate attributeName="opacity" values="0.35;1;0.35" dur="3.0s" repeatCount="indefinite"/></circle>
+    <circle cx="30"  cy="470" r="0.9" fill="#BB86FC"><animate attributeName="opacity" values="0.3;0.9;0.3" dur="4.6s" repeatCount="indefinite"/></circle>
+  </g>
+
+  <!-- four-point sparkle stars -->
+  <g fill="#EAF7FF">
+    <path d="M 500 120 l 2.4 7.6 7.6 2.4 -7.6 2.4 -2.4 7.6 -2.4 -7.6 -7.6 -2.4 7.6 -2.4 z">
+      <animate attributeName="opacity" values="0.2;1;0.2" dur="5s" repeatCount="indefinite"/>
+    </path>
+    <path d="M 96 170 l 1.8 5.7 5.7 1.8 -5.7 1.8 -1.8 5.7 -1.8 -5.7 -5.7 -1.8 5.7 -1.8 z">
+      <animate attributeName="opacity" values="1;0.25;1" dur="4.2s" repeatCount="indefinite"/>
+    </path>
+  </g>
+
+  <!-- planet glow halo -->
+  <circle cx="320" cy="300" r="168" fill="url(#nebPurple)" filter="url(#softer)"/>
+
+  <!-- ring: back half (behind planet) -->
+  <g transform="rotate(-16 320 300)">
+    <path d="M 66 300 A 254 74 0 0 1 574 300" stroke="url(#ringGrad)" stroke-width="24" opacity="0.55" filter="url(#soft)"/>
+    <path d="M 46 300 A 274 84 0 0 1 594 300" stroke="url(#ringGradThin)" stroke-width="3" opacity="0.6"/>
+  </g>
+
+  <!-- planet -->
+  <circle cx="320" cy="300" r="150" fill="url(#planetBody)"/>
+  <!-- subtle surface bands -->
+  <g clip-path="url(#planetClip)" opacity="0.35">
+    <ellipse cx="300" cy="250" rx="210" ry="26" fill="#BB86FC" opacity="0.35" filter="url(#soft)" transform="rotate(-8 300 250)"/>
+    <ellipse cx="340" cy="318" rx="230" ry="20" fill="#49D6FF" opacity="0.22" filter="url(#soft)" transform="rotate(-8 340 318)"/>
+    <ellipse cx="310" cy="386" rx="220" ry="30" fill="#4C2E9E" opacity="0.5" filter="url(#soft)" transform="rotate(-8 310 386)"/>
+    <ellipse cx="260" cy="190" rx="160" ry="18" fill="#E4D9FF" opacity="0.28" filter="url(#soft)" transform="rotate(-8 260 190)"/>
+  </g>
+  <!-- day-side highlight -->
+  <ellipse cx="258" cy="222" rx="92" ry="66" fill="#FFFFFF" opacity="0.14" filter="url(#softer)"/>
+  <!-- atmosphere rim -->
+  <circle cx="320" cy="300" r="152" fill="url(#atmo)"/>
+
+  <!-- ring: front half (over planet) -->
+  <g transform="rotate(-16 320 300)">
+    <path d="M 66 300 A 254 74 0 0 0 574 300" stroke="url(#ringGrad)" stroke-width="26" opacity="0.95"/>
+    <path d="M 46 300 A 274 84 0 0 0 594 300" stroke="url(#ringGradThin)" stroke-width="3" opacity="0.85"/>
+  </g>
+
+  <!-- small cyan moon with slow drift -->
+  <g>
+    <circle cx="540" cy="140" r="30" fill="url(#nebCyan)" filter="url(#softer)"/>
+    <circle cx="540" cy="140" r="17" fill="url(#moonBody)"/>
+    <animateTransform attributeName="transform" type="translate" values="0 0; 0 -10; 0 0" dur="9s" repeatCount="indefinite"/>
+  </g>
+
+  <!-- tiny distant planet, purple -->
+  <g>
+    <circle cx="92"  cy="428" r="20" fill="url(#nebPurple)" filter="url(#softer)"/>
+    <circle cx="92"  cy="428" r="9"  fill="url(#planetBody)"/>
+    <animateTransform attributeName="transform" type="translate" values="0 0; 0 8; 0 0" dur="11s" repeatCount="indefinite"/>
+  </g>
+
+  <!-- orbit arc accent -->
+  <path d="M 60 480 Q 320 560 600 430" stroke="url(#ringGradThin)" stroke-width="1.6" opacity="0.5" stroke-dasharray="2 7"/>
+</svg>
